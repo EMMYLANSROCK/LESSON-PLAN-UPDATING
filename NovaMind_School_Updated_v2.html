@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<title>NovaMind lesson plan - Smart Lesson Planner</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="title" content="NovaPlan - Smart Lesson Planner">
+
+<meta name="description" content="NovaPlan is a smart lesson plan management system that helps teachers create, save, edit, print and manage lesson plans digitally using modern technology.">
+
+<meta name="keywords" content="NovaPlan, Lesson Plan Management System, Teacher Planner, Smart Lesson Planner, Education Management System, Rwanda Education">
+
+<meta name="author" content="EMMYLANSROCK ENGINE">
+
+<meta name="robots" content="index, follow">
+
+<link rel="icon" href="favicon.ico">
+<style>
+body, html{
+    margin:0;
+    padding:0;
+    font-family: Arial, sans-serif;
+}
+
+/* BACKGROUND SLIDESHOW */
+.bg-slideshow{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+    animation: slideBg 20s infinite;
+    background-size:cover;
+    background-position:center;
+}
+
+@keyframes slideBg{
+    0%{background-image:url('https://images.unsplash.com/photo-1523240795612-9a054b0db644');}
+    25%{background-image:url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b');}
+    50%{background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f');}
+    75%{background-image:url('https://images.unsplash.com/photo-1519452575417-564c1401ecc0');}
+    100%{background-image:url('https://images.unsplash.com/photo-1523240795612-9a054b0db644');}
+}
+
+/* CONTAINER */
+.container{
+    max-width:1200px;
+    margin:20px auto;
+    background:rgba(255,255,255,0.93);
+    padding:20px;
+    border-radius:10px;
+}
+.dashboard-header{
+
+    text-align:center;
+    background:linear-gradient(135deg,#0f172a,#1a73e8);
+    color:white;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+
+}
+
+
+.dashboard-header h1{
+
+    font-size:32px;
+    margin:0;
+
+}
+
+
+.dashboard-header h2{
+
+    font-size:22px;
+
+}
+
+
+.dashboard-header p{
+
+    font-size:14px;
+    opacity:0.9;
+
+}
+.dashboard-menu{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.dashboard-menu button{
+    width:auto;
+    min-width:140px;
+}
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap:10px;
+}
+
+/* INPUTS */
+input, textarea{
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+/* LABEL */
+label{
+    font-size:12px;
+    color:#1a73e8;
+    display:block;
+}
+
+/* BUTTONS */
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin:5px;
+}
+
+.save{background:#1a73e8;color:white;}
+.clear{background:#e53935;color:white;}
+.view{background:#43a047;color:white;}
+.edit{background:#ff9800;color:white;}
+.delete{background:#e53935;color:white;}
+.print{background:#555;color:white;}
+
+#notify{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#43a047;
+    color:white;
+    padding:10px;
+    border-radius:5px;
+    display:none;
+}
+
+/* SECTION */
+.section{
+    margin-bottom:10px;
+}
+
+
+/* TELEPHONE */
+@media(max-width:900px){
+
+.grid{
+    grid-template-columns:1fr;
+}
+
+.container{
+    margin:5px;
+    padding:10px;
+}
+
+button{
+    width:100%;
+}
+
+}
+@media(max-width:600px){
+
+body,html{
+    width:100%;
+    overflow-x:hidden;
+}
+
+.container{
+    width:95%;
+    margin:10px auto;
+    padding:10px;
+}
+
+.dashboard-header h1{
+    font-size:24px;
+}
+
+.dashboard-header h2{
+    font-size:18px;
+}
+
+.dashboard-menu{
+    flex-direction:column;
+    align-items:center;
+}
+
+.dashboard-menu button{
+    width:90%;
+}
+
+.grid{
+    grid-template-columns:1fr;
+}
+
+input, textarea{
+    width:100%;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+}
+
+}
+    #loginPage{
+    width:380px;
+    margin:80px auto;
+    padding:35px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.3);
+    border-radius:20px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.3);
+    text-align:center;
+}
+
+
+#loginPage h2{
+    color:#0f172a;
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:30px;
+}
+
+
+/* INPUT MODERN STYLE */
+#loginPage input{
+    width:100%;
+    padding:14px;
+    margin:10px 0;
+    border:none;
+    outline:none;
+    background:rgba(255,255,255,0.9);
+    border-radius:12px;
+    font-size:15px;
+    box-sizing:border-box;
+    transition:0.3s;
+}
+
+
+#loginPage input:focus{
+    box-shadow:0 0 10px #1a73e8;
+    transform:scale(1.02);
+}
+
+
+/* BUTTON MODERN STYLE */
+#loginPage button{
+    width:100%;
+    padding:14px;
+    margin-top:12px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#1a73e8,#0f172a);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+
+#loginPage button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(26,115,232,0.5);
+}
+
+
+/* Forgot Password button */
+#loginPage button:last-child{
+    background:linear-gradient(135deg,#43a047,#2e7d32);
+}
+
+
+/* MOBILE */
+@media(max-width:500px){
+
+#loginPage{
+    width:90%;
+    padding:25px;
+}
+
+}
+</style>
+
+<style>
+.welcome-strip{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;background:#eef5ff;border-radius:12px;margin:14px 0;color:#102a43}
+.muted{color:#64748b;font-size:13px}.module-nav{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 22px}
+.module-nav button{background:#e8eef8;color:#16345b;border:1px solid #d5dfed;font-weight:600}
+.module-nav button:hover{background:#d7e8ff}.module-page{background:rgba(255,255,255,.97);padding:18px;border-radius:12px;margin:14px 0}
+.module-page h2{color:#12345a;margin-top:4px}.module-form{display:grid;gap:12px;margin:15px 0 24px}
+.module-form label{font-weight:600;color:#24527a}.module-form input,.module-form textarea,.module-form select{display:block;box-sizing:border-box;margin-top:5px;width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:7px;font:inherit;color:#172554}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat-card{background:#f0f6ff;padding:20px;border-radius:10px;display:flex;flex-direction:column;gap:6px}
+.stat-card b{font-size:28px;color:#1a73e8}.stat-card span{color:#475569}
+.quick-actions{display:flex;flex-wrap:wrap;gap:8px}.module-note{margin-top:20px;padding:12px;background:#f8fafc;border-left:4px solid #1a73e8;color:#475569}
+.record-list{display:grid;gap:10px;margin-top:16px}.record-card{border:1px solid #dbe4ef;border-radius:10px;padding:14px;background:#fff;overflow-wrap:anywhere}
+.record-card h3{margin:0 0 7px;color:#16345b}.record-actions{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.record-actions button{width:auto!important}.login-clock{color:#16345b;font-weight:600;margin-bottom:12px}
+@media(max-width:700px){.grid2,.stats-grid{grid-template-columns:1fr 1fr}.welcome-strip{align-items:flex-start;flex-direction:column}.module-nav button{width:auto!important;min-width:0}}
+@media(max-width:480px){.grid2,.stats-grid{grid-template-columns:1fr}.module-page{padding:12px}}
+@media print{.module-nav,.dashboard-menu,.record-actions,.module-form button{display:none!important}.module-page{display:block!important}}
+
+/* NOVAMIND PROFESSIONAL LOGIN: fixed REB and TVET image groups, never mixed */
+:root{--nm-navy:#17365d;--nm-blue:#2563eb;--nm-green:#16834a;--nm-ink:#172b4d;--nm-muted:#64748b;--nm-line:#dbe3ee;--nm-bg:#f4f7fb}
+body{background:var(--nm-bg);color:var(--nm-ink)}
+.bg-slideshow{opacity:.12;filter:blur(2px)}
+.login-shell,#loginPage{width:min(100% - 32px,760px)!important;box-sizing:border-box;margin:28px auto!important;padding:28px!important;background:#fff!important;border:1px solid #e5eaf1!important;border-radius:22px!important;box-shadow:0 18px 55px rgba(23,54,93,.12)!important;position:relative;z-index:1;backdrop-filter:none!important;text-align:left!important}
+.login-brand{display:flex;align-items:center;gap:12px;margin-bottom:14px}.brand-mark{width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,#17365d,#2563eb);color:#fff;display:grid;place-items:center;font-size:25px;font-weight:800}.brand-name{font-size:23px;font-weight:800;letter-spacing:-.5px;color:#17365d}.brand-subtitle{font-size:10px;font-weight:700;letter-spacing:1.1px;color:#64748b;margin-top:3px}
+.login-clock{color:#52647c;font-size:12px;margin:8px 0 18px}.login-intro h1{font-size:27px;margin:0;color:#172b4d}.login-intro p{margin:7px 0 20px;color:#64748b;font-size:14px}.sector-heading{font-size:13px;font-weight:700;color:#334155;margin-bottom:10px}
+.sector-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.sector-card{padding:0!important;margin:0!important;width:100%!important;min-width:0!important;overflow:hidden;display:flex;flex-direction:column;position:relative;text-align:left;background:#fff;border:2px solid #e2e8f0;border-radius:15px;color:#172b4d;transition:border-color .2s,box-shadow .2s,transform .2s}.sector-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(23,54,93,.10)}.sector-card.selected{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.10)}.sector-photo{height:145px;width:100%;display:block;background-size:cover;background-position:center;position:relative}.sector-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,25,48,.35),transparent 70%)}
+/* REB photographs are exclusively classroom / basic-education scenes */
+.reb-photo{background-image:url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=85'),url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=85');animation:rebPhotoCycle 18s infinite}
+/* TVET photographs are exclusively workshop / hands-on technical training scenes */
+.tvet-photo{background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=85'),url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=85');animation:tvetPhotoCycle 18s infinite}
+@keyframes rebPhotoCycle{0%,44%{background-image:url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=85')}50%,94%{background-image:url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=85')}100%{background-image:url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=85')}}
+@keyframes tvetPhotoCycle{0%,44%{background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=85')}50%,94%{background-image:url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=85')}100%{background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=85')}}
+.sector-card-content{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px}.sector-card-content strong{font-size:17px;color:#17365d}.sector-card-content b{font-size:12px;color:#334155}.sector-card-content small{font-size:11px;color:#64748b}.sector-check{position:absolute;right:10px;top:10px;width:25px;height:25px;border-radius:50%;background:#2563eb;color:#fff;display:none;place-items:center;font-weight:800}.sector-card.selected .sector-check{display:grid}
+.auth-panel{margin-top:20px;padding:20px;border:1px solid #e5eaf1;border-radius:16px;background:#fbfcfe}.auth-tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid #e2e8f0}.auth-tab{margin:0!important;width:auto!important;background:transparent;color:#64748b;border-radius:8px 8px 0 0;font-weight:700}.auth-tab.active{background:#eaf1ff;color:#1d4ed8}.auth-panel label{display:block;font-size:12px;font-weight:700;color:#334155;margin:10px 0 5px}.auth-panel input:not([type=checkbox]){box-sizing:border-box;width:100%;padding:12px 13px;margin:0;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#172b4d;font:inherit;outline:none}.auth-panel input:focus,#loginPage .auth-panel input:focus{border-color:#2563eb!important;box-shadow:0 0 0 3px rgba(37,99,235,.12)!important;transform:none!important}.auth-panel input:not([type=checkbox]),#loginPage .auth-panel input:not([type=checkbox]){box-sizing:border-box!important;width:100%!important;padding:12px 13px!important;margin:0!important;border:1px solid #cbd5e1!important;border-radius:9px!important;background:#fff!important;color:#172b4d!important;font:inherit!important}.password-wrap{display:flex;position:relative}.password-wrap input{padding-right:72px!important}.password-toggle{position:absolute;right:5px;top:4px;margin:0!important;padding:8px 10px!important;width:auto!important;background:#eef2f7;color:#1e40af;font-size:12px;font-weight:700}.login-options{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:12px 0}.auth-panel .remember-option{display:flex;align-items:center;gap:7px;margin:0;font-size:12px;font-weight:500}.remember-option input{width:auto!important;margin:0}.text-button{width:auto!important;margin:0!important;padding:4px!important;background:transparent;color:#1d4ed8;font-size:12px;font-weight:700}.primary-login,#loginPage .primary-login{width:100%!important;margin:12px 0 0!important;padding:13px!important;border:0!important;border-radius:9px!important;background:linear-gradient(110deg,#1e40af,#2563eb)!important;color:#fff!important;font-weight:700;font-size:14px}.primary-login:hover,#loginPage .primary-login:hover{filter:brightness(1.06);transform:none!important}#loginPage .auth-tab{width:auto!important;background:transparent!important;color:#64748b!important;border:0!important;box-shadow:none!important}#loginPage .auth-tab.active{background:#eaf1ff!important;color:#1d4ed8!important}#loginPage .password-toggle{width:auto!important;background:#eef2f7!important;color:#1e40af!important;border:0!important;box-shadow:none!important}#loginPage .text-button{width:auto!important;background:transparent!important;color:#1d4ed8!important;border:0!important;box-shadow:none!important}#loginPage .sector-card{background:#fff!important;color:#172b4d!important;border:2px solid #e2e8f0!important}#loginPage .sector-card.selected{border-color:#2563eb!important}#loginPage .sector-card-content strong{color:#17365d!important}#loginPage .sector-card-content b{color:#334155!important}#loginPage .sector-card-content small{color:#64748b!important}#loginPage .remember-option input{width:auto!important;padding:0!important;margin:0!important;border:0!important}#loginPage h1{color:#172b4d!important}#loginPage .login-intro p{color:#64748b!important}#loginPage .sector-mode-badge{display:inline-block;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.16);font-size:12px;font-weight:700}.login-security{font-size:11px;color:#64748b;margin:14px 0 0;text-align:center}.login-footer{text-align:center;color:#94a3b8;font-size:11px;margin-top:18px}.sector-mode-badge{display:inline-block!important;padding:6px 12px!important;border-radius:999px!important;background:rgba(255,255,255,.16)!important;font-size:12px!important;font-weight:700!important}
+.dashboard-header{background:linear-gradient(120deg,#17365d,#2563eb)!important}.save{background:#2563eb!important}.view{background:#16834a!important}.clear,.delete{background:#dc3545!important}.edit{background:#d97706!important}.module-nav button{background:#eff4fb;color:#17365d;border-color:#dbe3ee}.module-nav button:hover{background:#dbeafe}.stat-card{background:#f1f6fd}.stat-card b{color:#2563eb}.module-page{box-shadow:0 3px 15px rgba(23,54,93,.04)}
+@media(max-width:600px){.login-shell{width:calc(100% - 20px);margin:10px auto;padding:17px;border-radius:16px}.sector-grid{grid-template-columns:1fr 1fr;gap:8px}.sector-photo{height:105px}.sector-card-content{padding:9px}.sector-card-content strong{font-size:15px}.sector-card-content small{font-size:10px}.login-intro h1{font-size:23px}.auth-panel{padding:14px}}
+@media(prefers-reduced-motion:reduce){.reb-photo,.tvet-photo{animation:none!important;transition:none!important}}
+
+.school-message{background:#f5f8fc;border:1px solid #dbe5f0;border-radius:12px;padding:12px;margin:6px 0}.school-message.mine{background:#eaf3ff;border-color:#bfd7f5}.school-message small{color:#64748b}.school-message a{display:inline-block;margin-top:8px}.request-actions{display:flex;gap:8px;flex-wrap:wrap}.request-actions button{width:auto!important}.status-pill{display:inline-block;padding:3px 9px;border-radius:20px;background:#e8eef7;color:#234}.status-pending{background:#fff4d6;color:#815b00}.status-approved{background:#e2f5e9;color:#176b36}.status-rejected{background:#fde8e8;color:#9b2525}#notificationBadge:not(:empty){background:#dc3545;color:#fff;border-radius:20px;padding:2px 7px;font-size:11px}
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-slideshow"></div>
+<div id="notify"></div>
+
+
+<!-- NOVAMIND LOGIN / SCHOOL SECTOR SELECTION -->
+<div id="loginPage" class="login-shell">
+  <div class="login-brand">
+    <div class="brand-mark">N</div>
+    <div><div class="brand-name">NovaMind</div><div class="brand-subtitle">RWANDA EDUCATION MANAGEMENT SYSTEM</div></div>
+  </div>
+  <div class="login-clock"><strong id="loginDateTime"></strong></div>
+  <div class="login-intro"><h1>Welcome to NovaMind</h1><p>Plan Better. Teach Smarter. Track Learning.</p></div>
+
+  <div class="sector-heading">Choose your education sector</div>
+  <div class="sector-grid">
+    <button type="button" class="sector-card reb-sector selected" id="rebSectorCard" onclick="selectEducationSector('REB')" aria-pressed="true">
+      <span class="sector-photo reb-photo" aria-hidden="true"></span>
+      <span class="sector-card-content"><strong>REB</strong><b>Basic Education</b><small>Nursery · Primary · Secondary</small></span>
+      <span class="sector-check" id="rebCheck">✓</span>
+    </button>
+    <button type="button" class="sector-card tvet-sector" id="tvetSectorCard" onclick="selectEducationSector('TVET')" aria-pressed="false">
+      <span class="sector-photo tvet-photo" aria-hidden="true"></span>
+      <span class="sector-card-content"><strong>TVET / RTB</strong><b>Technical & Vocational Education</b><small>Trades · Practical Training · Levels 1–5</small></span>
+      <span class="sector-check" id="tvetCheck">✓</span>
+    </button>
+  </div>
+  <input type="hidden" id="educationSector" value="REB">
+
+  <div class="auth-panel">
+    <div class="auth-tabs"><button type="button" class="auth-tab active" id="loginTab" onclick="setAuthMode('login')">Login</button><button type="button" class="auth-tab" id="signupTab" onclick="setAuthMode('signup')">Create / Join School</button></div>
+    <div id="loginFields">
+      <label for="email">Email address</label><input id="email" type="email" autocomplete="username" placeholder="Enter your email" required>
+      <label for="password">Password</label>
+      <div class="password-wrap"><input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required><button type="button" class="password-toggle" onclick="togglePassword()" aria-label="Show password"><span id="passwordToggleIcon">Show</span></button></div>
+      <div class="login-options"><label class="remember-option"><input type="checkbox" id="rememberMe"> Remember me</label><button type="button" class="text-button" onclick="forgotPassword()">Forgot password?</button></div>
+      <button class="primary-login" type="button" onclick="login()">Sign in securely</button>
+    </div>
+    <div id="signupFields" style="display:none">
+      <div class="auth-tabs" style="margin:8px 0 14px">
+        <button type="button" class="auth-tab active" id="createSchoolMode" onclick="setSchoolSignupMode('create')">Create School Account</button>
+        <button type="button" class="auth-tab" id="joinSchoolMode" onclick="setSchoolSignupMode('join')">Join School Account</button>
+      </div>
+      <input type="hidden" id="schoolSignupMode" value="create">
+      <label for="fullname">Full name</label><input id="fullname" autocomplete="name" placeholder="Your full name">
+      <div id="createSchoolFields">
+        <label for="schoolName">School / Training Centre name</label><input id="schoolName" placeholder="Enter the official school name">
+        <label for="staffRole">Your role at school</label><select id="staffRole"><option value="DOS">DOS</option><option value="Headteacher">Headteacher</option></select>
+        <p class="muted">Only the first DOS or Headteacher creates the school's account. The system generates one unique School Serial Number.</p>
+      </div>
+      <div id="joinSchoolFields" style="display:none">
+        <label for="schoolSerial">School Serial Number</label><input id="schoolSerial" placeholder="Enter the serial number provided by DOS / Headteacher" autocomplete="off">
+        <label for="joinStaffRole">Your role at school</label><select id="joinStaffRole"><option value="teacher">Teacher / Trainer</option><option value="other">Other staff</option><option value="administrator">School Administrator</option><option value="DOS">DOS</option><option value="Headteacher">Headteacher</option></select>
+        <p class="muted">Enter the school's serial number. Your request will be sent to the existing DOS / Headteacher for approval. This also applies when a second DOS or Headteacher joins.</p>
+      </div>
+      <label for="phone">Phone number</label><input id="phone" type="tel" autocomplete="tel" placeholder="e.g. 07XXXXXXXX">
+      <label for="signupEmail">Email address</label><input id="signupEmail" type="email" autocomplete="email" placeholder="Enter your email">
+      <label for="signupPassword">Create password</label><div class="password-wrap"><input id="signupPassword" type="password" autocomplete="new-password" placeholder="At least 6 characters"><button type="button" class="password-toggle" onclick="toggleSignupPassword()"><span id="signupPasswordToggleIcon">Show</span></button></div>
+      <button class="primary-login" type="button" onclick="signup()" id="signupSubmitButton">Create School Account</button>
+    </div>
+    <p class="login-security"><span>🔒</span> Your account and school documents are protected by Firebase Authentication.</p>
+  </div>
+  <div class="login-footer">© <span id="loginYear"></span> NovaMind · Independent education management platform</div>
+</div>
+
+
+<!-- LESSON PLAN SYSTEM -->
+<div id="lessonSystem" class="container" style="display:none;">
+
+<div class="dashboard-header">
+
+<h1>🤖 EMMYLANSROCK ENGINE</h1>
+
+<h2>📘 NovaMind Lesson Plan Management System</h2>
+
+
+<p id="sectorModeBadge" class="sector-mode-badge">REB · Basic Education</p>
+
+<div class="dashboard-menu">
+
+<button class="save" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+🏠 Home
+</button>
+
+<button class="view" onclick="viewPlans()">
+📚 View Saved
+</button>
+
+<button class="print" onclick="window.print()">
+🖨 Print Reports
+</button>
+
+<button class="delete" onclick="logout()">
+🚪 Logout
+</button>
+
+
+</div> <!-- End dashboard-menu -->
+
+</div> <!-- End dashboard-header -->
+<div class="welcome-strip">
+  <div><strong id="pageGreeting">Welcome to NovaMind</strong><div id="pageDate" class="muted"></div></div>
+  <div id="currentUserEmail" class="muted"></div>
+</div>
+<nav class="module-nav" aria-label="NovaMind modules">
+  <button onclick="showModule('dashboard')">🏠 Dashboard</button>
+  <button onclick="showModule('lessonplans')">📝 Lesson Plans</button>
+  <button onclick="showModule('diary')">📘 Class Diary</button>
+  <button onclick="showModule('schemes')">📅 Scheme of Work</button>
+  <button onclick="showModule('syllabus')">📚 Subject Syllabus</button>
+  <button onclick="showModule('library')">📂 My Documents</button>
+  <button onclick="showModule('shared')">🤝 Shared With Me</button>
+  <button onclick="showModule('sharedby')">📤 Shared By Me</button>
+  <button onclick="showModule('notifications')">🔔 Notifications <span id="notificationBadge"></span></button>
+  <button onclick="showModule('schoolchat')">💬 School Chat</button>
+</nav>
+<section id="page-dashboard" class="module-page">
+  <h2>My Education Dashboard</h2>
+  <div class="stats-grid">
+    <div class="stat-card"><b id="countDiary">0</b><span>Class Diaries</span></div>
+    <div class="stat-card"><b id="countSchemes">0</b><span>Schemes of Work</span></div>
+    <div class="stat-card"><b id="countSyllabus">0</b><span>Subject Syllabuses</span></div>
+    <div class="stat-card"><b id="countFiles">0</b><span>My Documents</span></div>
+  </div>
+  <h3>Quick actions</h3>
+  <div class="quick-actions">
+    <button class="save" onclick="showModule('diary')">＋ Create Class Diary</button>
+    <button class="save" onclick="showModule('schemes')">＋ Create Scheme of Work</button>
+    <button class="save" onclick="showModule('syllabus')">＋ Create Subject Syllabus</button>
+    <button class="view" onclick="showModule('library')">⬆ Upload Document</button>
+    <button class="view" onclick="showModule('library')">Open My Documents</button>
+    <button class="view" onclick="showModule('shared')">View Shared Documents</button>
+  </div>
+  <div class="module-note">Your records are stored under your signed-in Firebase account. Curriculum content remains teacher-editable; this prototype does not label generated content as officially REB-approved.</div>
+</section>
+<section id="page-diary" class="module-page" style="display:none">
+  <h2>Class Diary</h2><p class="muted">Create, save, update, print and share lesson records.</p>
+  <form id="diaryForm" class="module-form">
+    <input type="hidden" id="diaryId">
+    <div class="grid2">
+      <label>School name<input id="diarySchool" required></label><label>Academic year<input id="diaryYear" placeholder="2026"></label>
+      <label>Term<input id="diaryTerm" placeholder="Term 1"></label><label>Teacher name<input id="diaryTeacher"></label>
+      <label>Class<input id="diaryClass"></label><label>Subject<input id="diarySubject" required></label>
+      <label>Date<input id="diaryDate" type="date"></label><label>Week number<input id="diaryWeek" type="number"></label>
+      <label>Lesson number<input id="diaryLesson" type="number"></label><label>Unit / Topic<input id="diaryTopic"></label>
+      <label>Subtopic<input id="diarySubtopic"></label><label>Duration<input id="diaryDuration" placeholder="40 minutes"></label>
+      <label>Learners present<input id="diaryPresent" type="number" min="0"></label><label>Learners absent<input id="diaryAbsent" type="number" min="0"></label>
+    </div>
+    <label>Learning objectives<textarea id="diaryObjectives"></textarea></label>
+    <label>Key competencies / Cross-cutting issues<textarea id="diaryCompetencies"></textarea></label>
+    <label>Previous knowledge / Introduction<textarea id="diaryIntro"></textarea></label>
+    <label>Teacher activities<textarea id="diaryTeacherActivities"></textarea></label>
+    <label>Learner activities<textarea id="diaryLearnerActivities"></textarea></label>
+    <label>Assessment / Conclusion / Homework<textarea id="diaryAssessment"></textarea></label>
+    <label>Remarks / Challenges / Follow-up<textarea id="diaryRemarks"></textarea></label>
+    <label>Status<select id="diaryStatus"><option>Draft</option><option>Completed</option><option>Postponed</option><option>Missed</option></select></label>
+    <button class="save" type="submit">Save Class Diary</button><button type="button" class="clear" onclick="resetModuleForm('diaryForm')">Clear</button>
+  </form><div id="diaryList" class="record-list"></div>
+</section>
+<section id="page-schemes" class="module-page" style="display:none">
+  <h2>Scheme of Work</h2><p class="muted">Add units and track teaching progress. Enter verified curriculum outcomes yourself.</p>
+  <form id="schemeForm" class="module-form">
+    <input type="hidden" id="schemeId">
+    <div class="grid2">
+      <label>School name<input id="schemeSchool"></label><label>Academic year<input id="schemeYear"></label>
+      <label>Term<input id="schemeTerm"></label><label>Teacher<input id="schemeTeacher"></label>
+      <label>Subject<input id="schemeSubject" required></label><label>Class / Grade<input id="schemeClass"></label>
+      <label>Total teaching weeks<input id="schemeWeeks" type="number" min="1"></label><label>Lessons per week<input id="schemeLessons" type="number" min="1"></label>
+    </div>
+    <label>Units (one per line: Week | Unit | Objectives | Content | Activities | Materials | Assessment | References | Remarks)<textarea id="schemeUnits" rows="7" placeholder="1 | Introduction | ... | ..."></textarea></label>
+    <button class="save" type="submit">Save Scheme of Work</button><button type="button" class="clear" onclick="resetModuleForm('schemeForm')">Clear</button>
+  </form><div id="schemeList" class="record-list"></div>
+</section>
+<section id="page-syllabus" class="module-page" style="display:none">
+  <h2>Subject Syllabus</h2>
+  <form id="syllabusForm" class="module-form">
+    <input type="hidden" id="syllabusId">
+    <div class="grid2">
+      <label>Country<input id="syllabusCountry" value="Rwanda"></label><label>Curriculum type<input id="syllabusCurriculum" value="Competence-Based Curriculum (CBC)"></label>
+      <label>Academic level<input id="syllabusLevel"></label><label>Class / Grade<input id="syllabusClass"></label>
+      <label>Subject<input id="syllabusSubject" required></label><label>Academic year<input id="syllabusYear"></label>
+      <label>Version<input id="syllabusVersion"></label><label>Language<input id="syllabusLanguage" value="English"></label>
+      <label>Total teaching hours<input id="syllabusHours" type="number"></label>
+    </div>
+    <label>Subject introduction / Rationale<textarea id="syllabusIntro"></textarea></label>
+    <label>General and specific objectives<textarea id="syllabusObjectives"></textarea></label>
+    <label>Competencies / Learning outcomes<textarea id="syllabusOutcomes"></textarea></label>
+    <label>Units, topics, skills, attitudes and values<textarea id="syllabusUnits" rows="7"></textarea></label>
+    <label>Teaching methods / Materials / Assessment strategies<textarea id="syllabusMethods"></textarea></label>
+    <label>References and recommended resources<textarea id="syllabusReferences"></textarea></label>
+    <button class="save" type="submit">Save Subject Syllabus</button><button type="button" class="clear" onclick="resetModuleForm('syllabusForm')">Clear</button>
+  </form><div id="syllabusList" class="record-list"></div>
+</section>
+<section id="page-library" class="module-page" style="display:none">
+  <h2>My Digital Library</h2><p class="muted">Upload and manage your own teaching books and documents.</p>
+  <form id="uploadForm" class="module-form">
+    <label>Select file<input id="uploadFile" type="file" required accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.csv,.png,.jpg,.jpeg,.webp,.txt"></label>
+    <div class="grid2"><label>Category<input id="fileCategory" placeholder="Books, Class Diary, Curriculum..."></label><label>Folder<input id="fileFolder" placeholder="e.g. Mathematics / Term 1"></label></div>
+    <label>Description<textarea id="fileDescription"></textarea></label>
+    <button class="save" type="submit">⬆ Upload to My Library</button>
+  </form>
+  <input id="fileSearch" placeholder="Search my documents..." oninput="loadMyFiles()">
+  <div id="myFilesList" class="record-list"></div>
+</section>
+<section id="page-notifications" class="module-page" style="display:none">
+  <h2>🔔 Notifications & Membership Requests</h2>
+  <p class="muted">DOS and Headteacher can approve or reject staff membership requests. Applicants receive an in-app notification and an email-composition link.</p>
+  <div id="membershipRequests" class="record-list"></div>
+  <h3>My request status</h3><div id="myMembershipStatus" class="record-list"></div>
+  <h3>Other notifications</h3><div id="schoolNotifications" class="record-list"></div>
+</section>
+<section id="page-schoolchat" class="module-page" style="display:none">
+  <h2>💬 School Communication Center</h2>
+  <p class="muted">Chat is available only to approved members of the same school. Messages and attachments are stored in Firebase. Voice notes, images, short videos and common documents are supported as attachments.</p>
+  <div id="schoolChatIdentity" class="module-note">Loading school membership...</div>
+  <div id="schoolChatMessages" class="record-list" style="max-height:420px;overflow:auto"></div>
+  <form id="schoolChatForm" class="module-form">
+    <label>Message<textarea id="schoolChatText" rows="3" placeholder="Write a message or reply..."></textarea></label>
+    <label>Attach image, voice note, short video or document<input id="schoolChatFile" type="file" accept="image/*,audio/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt"></label>
+    <button class="save" type="submit">Send to School</button>
+  </form>
+</section>
+<section id="page-shared" class="module-page" style="display:none">
+  <h2>Shared With Me</h2><p class="muted">Documents shared with the email address of your signed-in account.</p><div id="sharedList" class="record-list"></div>
+</section>
+<section id="page-sharedby" class="module-page" style="display:none">
+  <h2>Shared By Me</h2><div id="sharedByList" class="record-list"></div>
+</section>
+<section id="page-share" class="module-page" style="display:none">
+  <h2>Share a document</h2><form id="shareForm" class="module-form">
+    <input type="hidden" id="shareItemId"><input type="hidden" id="shareCollection"><input type="hidden" id="shareTitle">
+    <label>Recipient email<input id="shareEmail" type="email" required></label>
+    <label>Permission<select id="sharePermission"><option value="viewer">View / Download</option><option value="editor">Edit (where supported)</option></select></label>
+    <label>Message<textarea id="shareMessage"></textarea></label>
+    <button class="save" type="submit">Share access</button><button type="button" onclick="showModule('sharedby')">Cancel</button>
+  </form>
+</section>
+
+
+<div id="page-lessonplans" class="module-page">
+<!-- BASIC INFO -->
+<div class="grid">
+    <div><label>School Name \ Izina ry’ishuri</label><input id="school"></div>
+    <div><label>Teacher Name \ Izina ry’umwarimu</label><input id="teacher"></div>
+    <div><label>Subject \ Isomo</label><input id="subject"></div>
+    <div><label>Class / Grade \ Icyiciro cy’abanyeshuri</label><input id="class"></div>
+    <div><label>Unit \ Igice cy’isomo</label><input id="unit"></div>
+</div>
+
+<br>
+
+<div class="grid">
+    <div><label>Topic \ Insanganyamatsiko</label><input id="topic"></div>
+    <div><label>Sub Topic \ Insanganyamatsiko nto</label><input id="subtopic"></div>
+    <div><label>Date</label><input type="date" id="date"></div>
+    <div><label>Time</label><input type="time" id="time"></div>
+    <div><label>Duration</label><input id="duration"></div>
+</div>
+
+<hr>
+
+<!-- FULL SECTIONS RESTORED -->
+<div class="section"><label>General Objective \ Intego rusange</label><textarea id="generalObj"></textarea></div>
+<div class="section"><label>Specific Objectives \ Intego zihariye</label><textarea id="specificObj"></textarea></div>
+<div class="section"><label>Competencies \ Ubushobozi</label><textarea id="competencies"></textarea></div>
+<div class="section"><label>Learning Outcomes \ Ibyitezwe ku banyeshuri</label><textarea id="outcomes"></textarea></div>
+
+<div class="section"><label>Resources \ Ibikoresho</label><textarea id="resources"></textarea></div>
+<div class="section"><label>Teaching Materials \ Ibikoresho mwarimu akoresha</label><textarea id="teachingMat"></textarea></div>
+<div class="section"><label>Learning Materials \ Ibikoresho by’abanyeshuri bakoresha</label><textarea id="learningMat"></textarea></div>
+<div class="section"><label>ICT Tools \ Ibikoresho by’ikoranabuhanga</label><textarea id="ict"></textarea></div>
+<div class="section"><label>References \ Aho wakuye amakuru</label><textarea id="ref"></textarea></div>
+
+<div class="section"><label>Teacher Activities (Intro) \ Ibikorwa bya mwarimu</label><textarea id="tIntro"></textarea></div>
+<div class="section"><label>Learner Activities (Intro) \ Ibikorwa by’abanyeshuri</label><textarea id="lIntro"></textarea></div>
+<div class="section"><label>Teacher Activities (Development) \ Ibikorwa bya mwarimu</label><textarea id="tDev"></textarea></div>
+<div class="section"><label>Learner Activities (Development) \ Ibikorwa by’abanyeshuri</label><textarea id="lDev"></textarea></div>
+
+<div class="section"><label>Questions \ Ibibazo</label><textarea id="questions"></textarea></div>
+<div class="section"><label>Conclusion \ Umwanzuro</label><textarea id="conclusion"></textarea></div>
+<div class="section"><label>Homework \ Umukoro</label><textarea id="homework"></textarea></div>
+
+<div class="section"><label>Formative Assessment \ Isuzuma rihoraho</label><textarea id="formative"></textarea></div>
+<div class="section"><label>Summative Assessment \ Isuzuma risoza</label><textarea id="summative"></textarea></div>
+<div class="section"><label>Success Criteria \ Ibipimo by’uko isomo rigenze neza</label><textarea id="success"></textarea></div>
+
+<div class="section"><label>Special Needs \ Abafite ibibazo byihariye</label><textarea id="special"></textarea></div>
+<div class="section"><label>Gender Consideration \ Kuringaniza uburinganire</label><textarea id="gender"></textarea></div>
+<div class="section"><label>Cross Cutting Issues \ Ibibazo rusange</label><textarea id="cross"></textarea></div>
+
+<div class="section"><label>Challenges \ Ibibazo byahuye n’isomo</label><textarea id="challenges"></textarea></div>
+<div class="section"><label>Improvements \ Ibyakosorwa</label><textarea id="improvements"></textarea></div>
+
+<br>
+
+<!-- BUTTONS RESTORED -->
+<button class="save" onclick="savePlan()">Save Lesson Plan</button>
+
+<button class="clear" onclick="clearForm()">Clear</button>
+
+<button class="view" onclick="viewPlans()">View Saved</button>
+
+<button class="print" onclick="window.print()">
+Print Lesson Plan
+</button>
+<button class="delete" onclick="logout()">
+Logout
+</button>
+<hr>
+
+<input id="searchBox" placeholder="Search Lesson Plan..." onkeyup="searchPlans()">
+
+<div id="output"></div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDoc,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+updateDoc,
+setDoc,
+query,
+where
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged,
+updateProfile,
+sendPasswordResetEmail,
+setPersistence,
+browserLocalPersistence,
+browserSessionPersistence
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+const firebaseConfig = {
+apiKey: "AIzaSyD-zCzeiRYEt4mmDYR62m9A7WyI-vk4r3k",
+authDomain: "novamind-lesson-plan.firebaseapp.com",
+projectId: "novamind-lesson-plan",
+storageBucket: "novamind-lesson-plan.firebasestorage.app",
+messagingSenderId: "151497101808",
+appId: "1:151497101808:web:5a78006e07e8cc1df98d35",
+measurementId: "G-2F33MKWW2M"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const auth = getAuth(app);
+// Shared-school-computer safety: the default session ends when the browser session closes.
+
+
+window.editingId = null;
+
+
+// KUBONA DATA YOSE
+function getData(){
+
+let obj={};
+
+document.querySelectorAll("#lessonSystem input, #lessonSystem textarea")
+.forEach(el=>{
+
+obj[el.id]=el.value;
+
+});
+
+return obj;
+
+}
+
+
+// SAVE / UPDATE
+window.savePlan = async function(){
+
+if(!auth.currentUser){
+
+notify("Please login first");
+
+return;
+
+}
+
+try{
+
+let data = getData();
+data.userId = auth.currentUser.uid;
+data.userEmail = auth.currentUser.email;
+data.updatedAt = Date.now();
+
+
+if(window.editingId){
+
+await updateDoc(
+doc(db,"lessonPlans",window.editingId),
+data
+);
+
+window.editingId=null;
+
+notify("Updated Successfully");
+
+}else{
+
+
+await addDoc(
+collection(db,"lessonPlans"),
+{
+...data,
+userId: auth.currentUser.uid,
+userEmail: auth.currentUser.email,
+createdAt: Date.now()
+}
+);
+
+
+notify("Saved Successfully To Firebase");
+
+}
+
+
+clearForm();
+
+
+}catch(error){
+
+console.log(error);
+
+notify("Firebase Error: "+error.message);
+
+}
+
+}
+
+
+
+
+
+window.clearForm = function () {
+
+    document.querySelectorAll("#lessonSystem input, #lessonSystem textarea")
+        .forEach(e => e.value = "");
+
+}
+
+// ================= VIEW SAVED PLANS =================
+
+window.viewPlans = async function () {
+
+    if(!auth.currentUser){
+
+        notify("Please login first");
+
+        return;
+
+    }
+
+    try {
+
+        let q = query(
+            collection(db,"lessonPlans"),
+            where("userId","==",auth.currentUser.uid)
+        );
+
+
+        let plans = await getDocs(q);
+
+
+        let html = "<h3>Saved Lesson Plans</h3>";
+        let i = 0;
+
+
+        plans.forEach((item)=>{
+
+
+            let p = item.data();
+
+
+            html += `
+
+            <div style="background:#fff;padding:10px;margin:10px 0;border-radius:8px;">
+
+            <b>${++i}. ${p.subject || ""} - ${p.topic || ""}</b>
+
+            <br>
+
+            Teacher: ${p.teacher || ""}<br>
+
+            School: ${p.school || ""}<br>
+
+            Class: ${p.class || ""}<br>
+
+            Date: ${p.date || ""}<br>
+
+
+            <button class="edit" onclick="editPlan('${item.id}')">
+            Edit
+            </button>
+
+
+            <button class="delete" onclick="deletePlan('${item.id}')">Delete</button>
+            <button class="view" onclick="openShare('${item.id}','lessonPlans', '${(p.subject || "Lesson Plan").replace(/'/g,"")}')">Share</button>
+
+
+            </div>
+
+            `;
+
+
+        });
+
+
+        document.getElementById("output").innerHTML = html;
+
+
+    }
+    catch(error){
+
+        notify("Error loading data: "+error.message);
+
+    }
+
+}
+
+
+window.deletePlan=async function(id){
+
+let confirmDelete = confirm("Are you sure you want to delete this Lesson Plan?");
+
+if(confirmDelete){
+
+await deleteDoc(
+doc(db,"lessonPlans",id)
+);
+
+notify("Deleted Successfully");
+
+viewPlans();
+
+}
+
+}
+
+
+
+
+window.editPlan = async function(id){
+let q = query(
+    collection(db,"lessonPlans"),
+    where("userId","==",auth.currentUser.uid)
+);
+
+let plans = await getDocs(q);
+
+plans.forEach((item)=>{
+
+if(item.id === id){
+
+let data=item.data();
+
+Object.keys(data).forEach(key=>{
+
+let input=document.getElementById(key);
+
+if(input){
+
+input.value=data[key];
+
+}
+
+});
+
+
+window.editingId=id;
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+
+notify("Editing Lesson Plan");
+
+}
+
+});
+
+}
+
+
+// SHYIRA SEARCH HANO
+
+window.searchPlans=function(){
+
+let text=document
+.getElementById("searchBox")
+.value
+.toLowerCase();
+document.querySelectorAll("#output > div").forEach(function(div){
+
+if(div.innerText.toLowerCase().includes(text)){
+
+div.style.display="block";
+
+}else{
+
+div.style.display="none";
+
+}
+
+});
+
+}
+
+
+// AUTHENTICATION
+
+window.selectEducationSector = function(sector){
+  const value = sector === "TVET" ? "TVET" : "REB";
+  document.getElementById("educationSector").value = value;
+  document.getElementById("rebSectorCard").classList.toggle("selected", value === "REB");
+  document.getElementById("tvetSectorCard").classList.toggle("selected", value === "TVET");
+  document.getElementById("rebSectorCard").setAttribute("aria-pressed", String(value === "REB"));
+  document.getElementById("tvetSectorCard").setAttribute("aria-pressed", String(value === "TVET"));
+  sessionStorage.setItem("novamindEducationSector", value);
+};
+window.setAuthMode = function(mode){
+  const signup = mode === "signup";
+  document.getElementById("loginFields").style.display = signup ? "none" : "block";
+  document.getElementById("signupFields").style.display = signup ? "block" : "none";
+  document.getElementById("loginTab").classList.toggle("active", !signup);
+  document.getElementById("signupTab").classList.toggle("active", signup);
+};
+window.togglePassword = function(){
+  const field=document.getElementById("password"),show=field.type === "password";
+  field.type=show ? "text" : "password";
+  document.getElementById("passwordToggleIcon").textContent=show ? "Hide" : "Show";
+};
+window.toggleSignupPassword = function(){
+  const field=document.getElementById("signupPassword"),show=field.type === "password";
+  field.type=show ? "text" : "password";
+  document.getElementById("signupPasswordToggleIcon").textContent=show ? "Hide" : "Show";
+};
+window.setSchoolSignupMode = function(mode){
+  const create=mode==="create";
+  $("schoolSignupMode").value=create?"create":"join";
+  $("createSchoolFields").style.display=create?"block":"none";
+  $("joinSchoolFields").style.display=create?"none":"block";
+  $("createSchoolMode").classList.toggle("active",create);
+  $("joinSchoolMode").classList.toggle("active",!create);
+  $("signupSubmitButton").textContent=create?"Create School Account":"Send Join Request";
+};
+function makeSchoolSerial(){
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const bytes=new Uint8Array(10);crypto.getRandomValues(bytes);
+  let raw="";for(const b of bytes)raw+=chars[b%chars.length];
+  return "NVM-"+raw.slice(0,5)+"-"+raw.slice(5);
+}
+window.signup = async function(){
+  const mode=$("schoolSignupMode").value;
+  const fullname=$("fullname").value.trim();
+  const email=$("signupEmail").value.trim().toLowerCase();
+  const phone=$("phone").value.trim();
+  const password=$("signupPassword").value;
+  const educationSector=$("educationSector").value||"REB";
+  const schoolName=$("schoolName").value.trim();
+  const role=mode==="create"?$("staffRole").value:$("joinStaffRole").value;
+  const serial=$("schoolSerial").value.trim().toUpperCase();
+  if(!fullname||!email||!password){notify("Complete your full name, email and password.");return;}
+  if(password.length<6){notify("Password must contain at least 6 characters.");return;}
+  if(mode==="create"&&(!schoolName||!["DOS","Headteacher"].includes(role))){notify("Enter the school name. Only DOS or Headteacher can create a school account.");return;}
+  if(mode==="join"&&!serial){notify("Enter the School Serial Number.");return;}
+  try{
+    await setPersistence(auth,browserSessionPersistence);
+    const cred=await createUserWithEmailAndPassword(auth,email,password);
+    await updateProfile(cred.user,{displayName:fullname});
+    if(mode==="create"){
+      const normalizedName=schoolName.toLocaleLowerCase().replace(/\\s+/g," ").trim();
+      const existing=await getDocs(query(collection(db,"schools"),where("normalizedSchoolName","==",normalizedName)));
+      if(!existing.empty){
+        await signOut(auth);
+        throw new Error("This school already has a School Account. Choose Join School Account and use its School Serial Number to request access. A school name can only be registered once.");
+      }
+      const schoolSerial=makeSchoolSerial();
+      const schoolRef=doc(collection(db,"schools"));
+      await setDoc(schoolRef,{schoolName,normalizedSchoolName:normalizedName,schoolSerial,educationSector,createdBy:cred.user.uid,createdByEmail:email,createdAt:Date.now(),status:"active"});
+      await setDoc(doc(db,"schoolMembers",cred.user.uid),{uid:cred.user.uid,email,fullname,phone,schoolId:schoolRef.id,schoolName,schoolSerial,educationSector,role,memberRole:role,status:"approved",approvedBy:cred.user.uid,joinedAt:Date.now()});
+      await setDoc(doc(db,"users",cred.user.uid),{fullname,email,phone,schoolName,schoolId:schoolRef.id,schoolSerial,educationSector,role,memberStatus:"approved",createdAt:Date.now()});
+      const serialSubject=encodeURIComponent("Your NovaMind School Serial Number");
+      const serialBody=encodeURIComponent(`Your school account has been created.\\nSchool: ${schoolName}\\nSchool Serial Number: ${schoolSerial}\\nKeep this number safe and share it only with staff you authorize to request membership.`);
+      alert(`School Account created successfully!\\n\\nSchool: ${schoolName}\\nSchool Serial Number: ${schoolSerial}\\n\\nThis serial number is also being prepared in an email to ${email}. Save it safely and share it with authorized staff only.`);
+      window.open(`mailto:${encodeURIComponent(email)}?subject=${serialSubject}&body=${serialBody}`,"_blank");
+    }else{
+      const schoolDoc=joiningSchoolDoc;
+      const school=schoolDoc.data();
+      const existingMember=await getDoc(doc(db,"schoolMembers",cred.user.uid));
+      if(existingMember.exists()&&existingMember.data().status==="approved"){
+        await signOut(auth);throw new Error("This user is already an approved member of a school.");
+      }
+      const pending=await getDocs(query(collection(db,"membershipRequests"),where("uid","==",cred.user.uid),where("schoolId","==",schoolDoc.id),where("status","==","pending")));
+      if(!pending.empty){
+        await signOut(auth);throw new Error("You already have a pending request for this school.");
+      }
+      await setDoc(doc(db,"users",cred.user.uid),{fullname,email,phone,schoolName:school.schoolName,schoolId:schoolDoc.id,schoolSerial:serial,educationSector:school.educationSector||educationSector,role,memberStatus:"pending",createdAt:Date.now()});
+      await addDoc(collection(db,"membershipRequests"),{uid:cred.user.uid,fullname,email,phone,schoolId:schoolDoc.id,schoolName:school.schoolName,schoolSerial:serial,educationSector:school.educationSector||educationSector,requestedRole:role,status:"pending",reason:"",createdAt:Date.now()});
+      const approvers=await getDocs(query(collection(db,"schoolMembers"),where("schoolId","==",schoolDoc.id),where("status","==","approved")));
+      for(const a of approvers.docs){
+        if(["DOS","Headteacher"].includes(a.data().role)){
+          await addDoc(collection(db,"userNotifications"),{recipientUid:a.data().uid,title:"New school membership request",message:`${fullname} (${email}) requested to join ${school.schoolName} as ${role}. Please Accept or Reject in Notifications.`,status:"unread",createdAt:Date.now()});
+        }
+      }
+      await addDoc(collection(db,"userNotifications"),{recipientUid:cred.user.uid,title:"Join request submitted",message:`Your request to join ${school.schoolName} was submitted and is waiting for DOS / Headteacher approval.`,status:"unread",createdAt:Date.now()});
+      notify("Join request submitted. Wait for DOS / Headteacher approval.");
+    }
+    await signOut(auth);
+    $("email").value=email;
+    ["password","fullname","signupEmail","phone","schoolName","signupPassword","schoolSerial"].forEach(id=>{if($(id))$(id).value="";});
+    window.setAuthMode("login");
+  }catch(error){if(auth.currentUser)try{await signOut(auth);}catch{}notify(error.message||"Account setup failed.");}
+};
+window.login = async function(){
+  const email=document.getElementById("email").value.trim().toLowerCase();
+  const password=document.getElementById("password").value;
+  const remember=document.getElementById("rememberMe").checked;
+  if(!email || !password){notify("Enter your email address and password.");return;}
+  try{
+    await setPersistence(auth,remember ? browserLocalPersistence : browserSessionPersistence);
+    await signInWithEmailAndPassword(auth,email,password);
+    notify("Welcome to NovaMind. You are signed in.");
+  }catch(error){notify(error.code === "auth/invalid-credential" ? "Email or password is incorrect." : error.message);}
+};
+window.forgotPassword = async function(){
+
+let email = document.getElementById("email").value;
+
+
+if(email == ""){
+
+notify("Please enter your email first");
+
+return;
+
+}
+
+
+try{
+
+await sendPasswordResetEmail(auth,email);
+
+
+notify("Password reset link sent to your email");
+
+
+}
+
+catch(error){
+
+notify(error.message);
+
+}
+
+}
+window.logout = async function(){
+
+try{
+
+await signOut(auth);
+if (window.clearUserWorkspaceUI) window.clearUserWorkspaceUI();
+notify("Logged Out Successfully");
+
+}
+
+catch(error){
+
+notify(error.message);
+
+}
+
+}
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+document.getElementById("loginPage").style.display="none";
+document.getElementById("lessonSystem").style.display="block";
+
+}
+else{
+
+document.getElementById("loginPage").style.display="block";
+document.getElementById("lessonSystem").style.display="none";
+if (window.clearUserWorkspaceUI) window.clearUserWorkspaceUI();
+else {
+  document.querySelectorAll("#lessonSystem input, #lessonSystem textarea, #lessonSystem select").forEach(el => { if (el.type === "checkbox" || el.type === "radio") el.checked = false; else el.value = ""; });
+  ["output","diaryList","schemeList","syllabusList","myFilesList","sharedList","sharedByList"].forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML=""; });
+}
+}
+
+});
+// HANO HASIGARA NOTIFY
+
+function notify(msg){
+
+let n=document.getElementById("notify");
+
+n.innerText=msg;
+
+n.style.display="block";
+
+setTimeout(()=>{
+
+n.style.display="none";
+
+},2000);
+
+}
+
+</script>
+
+
+
+<script type="module">
+import { getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDoc, getDocs, query, where, doc, updateDoc, deleteDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+const app = getApp();
+const auth = getAuth(app), db = getFirestore(app), storage = getStorage(app);
+const modules = {
+ diary:{collection:"classDiaries",prefix:"diary",fields:["School","Year","Term","Teacher","Class","Subject","Date","Week","Lesson","Topic","Subtopic","Duration","Present","Absent","Objectives","Competencies","Intro","TeacherActivities","LearnerActivities","Assessment","Remarks","Status"],title:"Class Diary"},
+ schemes:{collection:"schemesOfWork",prefix:"scheme",fields:["School","Year","Term","Teacher","Subject","Class","Weeks","Lessons","Units"],title:"Scheme of Work"},
+ syllabus:{collection:"syllabuses",prefix:"syllabus",fields:["Country","Curriculum","Level","Class","Subject","Year","Version","Language","Hours","Intro","Objectives","Outcomes","Units","Methods","References"],title:"Subject Syllabus"}
+};
+let activeUser=null;
+const $=id=>document.getElementById(id);
+function safe(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+window.clearUserWorkspaceUI = function(){
+ const root=$("lessonSystem");
+ if(root){root.querySelectorAll("input, textarea, select").forEach(el=>{if(el.type==="checkbox"||el.type==="radio")el.checked=false;else el.value="";});}
+ ["output","diaryList","schemeList","syllabusList","myFilesList","sharedList","sharedByList","membershipRequests","myMembershipStatus","schoolNotifications","schoolChatMessages"].forEach(id=>{const el=$(id);if(el)el.innerHTML="";});
+ ["countDiary","countSchemes","countSyllabus","countFiles"].forEach(id=>{const el=$(id);if(el)el.textContent="0";});
+ if($("pageGreeting"))$("pageGreeting").textContent="Welcome to NovaMind";
+ if($("pageDate"))$("pageDate").textContent="";
+ if($("currentUserEmail"))$("currentUserEmail").textContent="";
+ if($("notificationBadge"))$("notificationBadge").textContent="";
+ activeSchool=null;
+ if($("email"))$("email").value="";
+ if($("password"))$("password").value="";
+ if($("rememberMe"))$("rememberMe").checked=false;
+ sessionStorage.removeItem("novamindEducationSector");
+ window.editingId=null;
+};
+function nowText(){return new Date().toLocaleString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"});}
+function greeting(){let h=new Date().getHours();return h<12?"Good morning":h<17?"Good afternoon":"Good evening";}
+function updateGreetings(){
+ const name=activeUser?.displayName || activeUser?.email?.split("@")[0] || "Teacher";
+ if($("pageGreeting")) $("pageGreeting").textContent=`${greeting()}, ${name}`;
+ if($("pageDate")) $("pageDate").textContent=nowText();
+ if($("currentUserEmail")) $("currentUserEmail").textContent=activeUser?.email||"";
+ const sector=sessionStorage.getItem("novamindEducationSector")||"REB";
+ if($("sectorModeBadge")) $("sectorModeBadge").textContent=sector==="TVET"?"TVET / RTB · Technical & Vocational Education":"REB · Basic Education";
+ if($("loginDateTime")) $("loginDateTime").textContent=nowText();
+ if($("loginYear")) $("loginYear").textContent=new Date().getFullYear();
+}
+setInterval(updateGreetings,1000); updateGreetings();
+const rememberedSector=sessionStorage.getItem("novamindEducationSector");
+if(rememberedSector && window.selectEducationSector) window.selectEducationSector(rememberedSector);
+
+window.showModule=async function(name){
+ document.querySelectorAll(".module-page").forEach(p=>p.style.display="none");
+ const target=$("page-"+name); if(target) target.style.display="block";
+ updateGreetings();
+ if(name==="dashboard") await refreshDashboard();
+ if(name==="notifications") await loadSchoolNotifications();
+ if(name==="schoolchat") await loadSchoolChat();
+ if(name==="diary"||name==="schemes"||name==="syllabus") await loadRecords(name);
+ if(name==="library") await loadMyFiles();
+ if(name==="shared") await loadShared();
+ if(name==="sharedby") await loadSharedBy();
+ window.scrollTo({top:0,behavior:"smooth"});
+ updateGreetings();
+};
+window.resetModuleForm=function(formId){$(formId)?.reset();const hidden=$(formId)?.querySelector('input[type="hidden"]');if(hidden)hidden.value="";};
+function formData(prefix,fields){
+ const data={};fields.forEach(f=>{const el=$(prefix+f);if(el)data[f.toLowerCase()]=el.value.trim();});return data;
+}
+function fillForm(prefix,fields,data,id){
+ fields.forEach(f=>{const el=$(prefix+f);if(el)el.value=data[f.toLowerCase()]??"";});
+ $(prefix+"Id").value=id;
+}
+Object.entries(modules).forEach(([key,m])=>{
+ const form=$(m.prefix+"Form");
+ if(!form)return;
+ form.addEventListener("submit",async e=>{
+  e.preventDefault();if(!activeUser)return alert("Please sign in first.");
+  try{
+   const id=$(m.prefix+"Id").value;
+   const payload={...formData(m.prefix,m.fields),userId:activeUser.uid,userEmail:activeUser.email,updatedAt:Date.now()};
+   if(id) await updateDoc(doc(db,m.collection,id),payload);
+   else await addDoc(collection(db,m.collection),{...payload,createdAt:Date.now()});
+   alert(m.title+" saved successfully.");form.reset();$(m.prefix+"Id").value="";await loadRecords(key);await refreshDashboard();
+  }catch(err){console.error(err);alert("Could not save: "+err.message);}
+ });
+});
+async function loadRecords(key){
+ const m=modules[key];if(!activeUser)return;
+ const host=$(key==="diary"?"diaryList":key==="schemes"?"schemeList":"syllabusList");
+ host.innerHTML="<p>Loading...</p>";
+ try{
+  const snap=await getDocs(query(collection(db,m.collection),where("userId","==",activeUser.uid)));
+  host.innerHTML="";
+  snap.forEach(d=>{
+   const x=d.data(),title=x.subject||x.topic||x.class||m.title;
+   const card=document.createElement("article");card.className="record-card";
+   card.innerHTML=`<h3>${safe(title)} — ${safe(x.date||x.year||"")}</h3><div>${safe(x.topic||x.units||x.intro||"")}</div><small class="muted">Owner: ${safe(activeUser.email)} · ${safe(x.status||"Saved")}</small>
+   <div class="record-actions"><button class="edit" data-action="edit">Edit</button><button class="print" data-action="print">Print</button><button class="view" data-action="share">Share</button><button class="delete" data-action="delete">Delete</button></div>`;
+   card.querySelector('[data-action="edit"]').onclick=()=>{fillForm(m.prefix,m.fields,x,d.id);window.showModule(key);};
+   card.querySelector('[data-action="print"]').onclick=()=>{const w=window.open("","_blank");w.document.write(`<pre>${safe(JSON.stringify(x,null,2))}</pre>`);w.document.close();w.print();};
+   card.querySelector('[data-action="share"]').onclick=()=>window.openShare(d.id,m.collection,title);
+   card.querySelector('[data-action="delete"]').onclick=async()=>{if(confirm("Delete this record?")){await deleteDoc(doc(db,m.collection,d.id));loadRecords(key);refreshDashboard();}};
+   host.appendChild(card);
+  });
+  if(!snap.size)host.innerHTML="<p class='muted'>No records yet. Use the form above to create one.</p>";
+ }catch(e){host.innerHTML=`<p class="muted">Unable to load records: ${safe(e.message)}</p>`;}
+}
+window.openShare=function(id,collectionName,title){
+ $("shareItemId").value=id;$("shareCollection").value=collectionName;$("shareTitle").value=title||"NovaMind document";
+ $("shareEmail").value="";$("shareMessage").value="";window.showModule("share");
+};
+$("shareForm").addEventListener("submit",async e=>{
+ e.preventDefault();if(!activeUser)return;
+ const email=$("shareEmail").value.trim().toLowerCase();
+ if(email===activeUser.email.toLowerCase())return alert("You already own this document.");
+ try{
+  await addDoc(collection(db,"documentShares"),{
+   itemId:$("shareItemId").value,sourceCollection:$("shareCollection").value,
+   title:$("shareTitle").value,ownerId:activeUser.uid,ownerEmail:activeUser.email,
+   recipientEmail:email,permission:$("sharePermission").value,message:$("shareMessage").value,
+   status:"active",createdAt:Date.now()
+  });
+  alert("Sharing permission recorded. The recipient must sign in with this email and the Firestore rules must permit this sharing workflow.");
+  const subject=encodeURIComponent("A NovaMind document was shared with you");
+  const body=encodeURIComponent(`${activeUser.email} shared "${$("shareTitle").value}" with you. Sign in to NovaMind using ${email} to view it.`);
+  window.location.href=`mailto:${encodeURIComponent(email)}?subject=${subject}&body=${body}`;
+  window.showModule("sharedby");
+ }catch(err){alert("Share failed: "+err.message);}
+});
+async function loadShared(){
+ if(!activeUser)return;const host=$("sharedList");host.innerHTML="<p>Loading...</p>";
+ try{
+  const s=await getDocs(query(collection(db,"documentShares"),where("recipientEmail","==",activeUser.email.toLowerCase()),where("status","==","active")));
+  host.innerHTML="";
+  for(const d of s.docs){const x=d.data();const c=document.createElement("div");c.className="record-card";
+   c.innerHTML=`<h3>${safe(x.title)}</h3><p>Shared by ${safe(x.ownerEmail)} · Permission: ${safe(x.permission)}</p><div class="record-actions"><button class="view">Open document</button></div>`;
+   c.querySelector("button").onclick=async()=>{try{const item=await getDocs(query(collection(db,x.sourceCollection),where("__name__","==",x.itemId)));if(item.empty)throw Error("The source record is unavailable or access is blocked by security rules.");const data=item.docs[0].data();const w=window.open("","_blank");w.document.write(`<h2>${safe(x.title)}</h2><pre>${safe(JSON.stringify(data,null,2))}</pre>`);w.document.close();}catch(err){alert(err.message);}};
+   host.appendChild(c);
+  }
+  if(!s.size)host.innerHTML="<p class='muted'>No documents have been shared with this account.</p>";
+ }catch(e){host.innerHTML=`<p>${safe(e.message)}</p>`;}
+}
+async function loadSharedBy(){
+ if(!activeUser)return;const host=$("sharedByList");host.innerHTML="<p>Loading...</p>";
+ try{
+  const s=await getDocs(query(collection(db,"documentShares"),where("ownerId","==",activeUser.uid)));
+  host.innerHTML="";
+  s.forEach(d=>{const x=d.data(),c=document.createElement("div");c.className="record-card";
+   c.innerHTML=`<h3>${safe(x.title)}</h3><p>To: ${safe(x.recipientEmail)} · ${safe(x.permission)} · ${safe(x.status)}</p><button class="delete">Revoke access</button>`;
+   c.querySelector("button").onclick=async()=>{if(confirm("Revoke this sharing invitation?")){await updateDoc(doc(db,"documentShares",d.id),{status:"revoked",revokedAt:Date.now()});loadSharedBy();}};
+   host.appendChild(c);
+  });
+  if(!s.size)host.innerHTML="<p class='muted'>You have not shared any documents.</p>";
+ }catch(e){host.innerHTML=`<p>${safe(e.message)}</p>`;}
+}
+$("uploadForm").addEventListener("submit",async e=>{
+ e.preventDefault();if(!activeUser)return alert("Please sign in.");
+ const file=$("uploadFile").files[0];if(!file)return;
+ const allowed=/\.(pdf|doc|docx|xls|xlsx|ppt|pptx|csv|png|jpg|jpeg|webp|txt)$/i;
+ if(!allowed.test(file.name))return alert("Unsupported file type.");
+ if(file.size>25*1024*1024)return alert("Maximum file size is 25 MB.");
+ try{
+  const fileId=crypto.randomUUID(),path=`users/${activeUser.uid}/${fileId}_${file.name}`;
+  const storageRef=ref(storage,path);await uploadBytes(storageRef,file,{contentType:file.type||"application/octet-stream"});
+  const url=await getDownloadURL(storageRef);
+  await addDoc(collection(db,"documents"),{fileId,name:file.name,path,url,size:file.size,mimeType:file.type,category:$("fileCategory").value,folder:$("fileFolder").value,description:$("fileDescription").value,userId:activeUser.uid,userEmail:activeUser.email,createdAt:Date.now()});
+  alert("File uploaded successfully.");$("uploadForm").reset();await loadMyFiles();await refreshDashboard();
+ }catch(err){console.error(err);alert("Upload failed: "+err.message);}
+});
+window.loadMyFiles=async function(){
+ if(!activeUser)return;const host=$("myFilesList");if(!host)return;host.innerHTML="<p>Loading...</p>";
+ try{
+  const s=await getDocs(query(collection(db,"documents"),where("userId","==",activeUser.uid)));
+  const term=($("fileSearch")?.value||"").toLowerCase();host.innerHTML="";
+  s.forEach(d=>{const x=d.data();if(!`${x.name} ${x.category} ${x.folder}`.toLowerCase().includes(term))return;
+   const c=document.createElement("div");c.className="record-card";
+   c.innerHTML=`<h3>${safe(x.name)}</h3><p>${safe(x.category||"Uncategorized")} · ${safe(x.folder||"My Files")} · ${(x.size/1024).toFixed(1)} KB</p><p class="muted">${safe(x.description||"")} · ${new Date(x.createdAt||Date.now()).toLocaleDateString()}</p>
+   <div class="record-actions"><button class="view">Download</button><button class="edit">Share</button><button class="delete">Delete</button></div>`;
+   const [download,share,del]=c.querySelectorAll("button");
+   download.onclick=()=>{const a=document.createElement("a");a.href=x.url;a.download=x.name;a.target="_blank";a.click();};
+   share.onclick=()=>window.openShare(d.id,"documents",x.name);
+   del.onclick=async()=>{if(confirm("Delete this file permanently?")){await deleteObject(ref(storage,x.path));await deleteDoc(doc(db,"documents",d.id));loadMyFiles();refreshDashboard();}};
+   host.appendChild(c);
+  });
+  if(!host.children.length)host.innerHTML="<p class='muted'>No matching files in your library.</p>";
+ }catch(e){host.innerHTML=`<p>Could not load files: ${safe(e.message)}</p>`;}
+};
+async function refreshDashboard(){
+ if(!activeUser)return;
+ for(const [key,m] of Object.entries(modules)){try{const s=await getDocs(query(collection(db,m.collection),where("userId","==",activeUser.uid)));const el=$("count"+(key==="diary"?"Diary":key==="schemes"?"Schemes":"Syllabus"));if(el)el.textContent=s.size;}catch{}}
+ try{const f=await getDocs(query(collection(db,"documents"),where("userId","==",activeUser.uid)));$("countFiles").textContent=f.size;}catch{}
+}
+let activeSchool=null, schoolChatUnsubscribe=null;
+async function getMySchoolMembership(){
+ if(!activeUser)return null;
+ const snap=await getDoc(doc(db,"schoolMembers",activeUser.uid));
+ if(!snap.exists() || snap.data().status!=="approved")return null;
+ return {id:snap.data().schoolId,...snap.data()};
+}
+async function loadSchoolNotifications(){
+ if(!activeUser)return;
+ const reqHost=$("membershipRequests"),mineHost=$("myMembershipStatus"),otherHost=$("schoolNotifications");
+ if(reqHost)reqHost.innerHTML="<p>Loading requests...</p>";
+ try{
+  const me=await getMySchoolMembership();activeSchool=me;
+  if(reqHost){reqHost.innerHTML="";
+   if(me && ["DOS","Headteacher"].includes(me.role)){
+    const q=query(collection(db,"membershipRequests"),where("schoolId","==",me.schoolId),where("status","==","pending"));
+    const requests=await getDocs(q);
+    requests.forEach(d=>{const x=d.data(),card=document.createElement("article");card.className="record-card";
+     card.innerHTML=`<h3>${safe(x.fullname)} <span class="status-pill status-pending">Pending</span></h3><p>${safe(x.email)} · ${safe(x.requestedRole)} · ${safe(x.phone||"")}</p><p>School: ${safe(x.schoolName)}</p><div class="request-actions"><button class="view">Accept</button><button class="delete">Reject</button></div>`;
+     const [accept,reject]=card.querySelectorAll("button");
+     accept.onclick=()=>decideMembership(d.id,x,true);
+     reject.onclick=()=>decideMembership(d.id,x,false);
+     reqHost.appendChild(card);
+    });
+    if(!requests.size)reqHost.innerHTML="<p class='muted'>No pending membership requests.</p>";
+   }else reqHost.innerHTML="<p class='muted'>Only the school's DOS or Headteacher can approve membership requests.</p>";
+  }
+  if(mineHost){const q=query(collection(db,"membershipRequests"),where("uid","==",activeUser.uid));const mine=await getDocs(q);mineHost.innerHTML="";
+   mine.forEach(d=>{const x=d.data();const c=document.createElement("div");c.className="record-card";c.innerHTML=`<b>${safe(x.schoolName)}</b> — <span class="status-pill status-${safe(x.status)}">${safe(x.status)}</span><p>${safe(x.reason||"No decision reason provided yet.")}</p>`;mineHost.appendChild(c);});
+   if(!mine.size)mineHost.innerHTML="<p class='muted'>No membership request history.</p>";
+  }
+  if(otherHost){const q=query(collection(db,"userNotifications"),where("recipientUid","==",activeUser.uid));const notes=await getDocs(q);otherHost.innerHTML="";
+   notes.docs.sort((a,b)=>(b.data().createdAt||0)-(a.data().createdAt||0)).forEach(d=>{const x=d.data(),c=document.createElement("div");c.className="record-card";c.innerHTML=`<b>${safe(x.title)}</b><p>${safe(x.message)}</p><small>${new Date(x.createdAt||Date.now()).toLocaleString()}</small>`;otherHost.appendChild(c);});
+   if(!notes.size)otherHost.innerHTML="<p class='muted'>No notifications.</p>";
+   const badge=$("notificationBadge");if(badge)badge.textContent=notes.docs.filter(d=>d.data().status==="unread").length||"";
+  }
+ }catch(e){if(reqHost)reqHost.innerHTML=`<p class='muted'>Could not load requests: ${safe(e.message)}</p>`;}
+}
+async function decideMembership(requestId,x,approved){
+ let reason="";
+ if(!approved){reason=prompt("Enter the reason for rejecting this request:")||"";if(!reason.trim())return alert("A reason is required before rejecting.");}
+ try{
+  await updateDoc(doc(db,"membershipRequests",requestId),{status:approved?"approved":"rejected",reason,decidedBy:activeUser.uid,decidedByEmail:activeUser.email,decidedAt:Date.now()});
+  if(approved){await setDoc(doc(db,"schoolMembers",x.uid),{uid:x.uid,email:x.email,fullname:x.fullname,phone:x.phone||"",schoolId:x.schoolId,schoolName:x.schoolName,educationSector:x.educationSector,role:x.requestedRole,memberRole:x.requestedRole,status:"approved",approvedBy:activeUser.uid,joinedAt:Date.now()});}
+  await updateDoc(doc(db,"users",x.uid),{memberStatus:approved?"approved":"rejected",membershipDecisionReason:reason,updatedAt:Date.now()});
+  await addDoc(collection(db,"userNotifications"),{recipientUid:x.uid,title:approved?"School membership approved":"School membership rejected",message:approved?`Your request to join ${x.schoolName} was approved.`:`Your request to join ${x.schoolName} was rejected. Reason: ${reason}`,status:"unread",createdAt:Date.now()});
+  const subject=encodeURIComponent(approved?"NovaMind school membership approved":"NovaMind school membership update");
+  const body=encodeURIComponent(approved?`Hello ${x.fullname}, your request to join ${x.schoolName} has been approved. You can now sign in to NovaMind.`:`Hello ${x.fullname}, your request to join ${x.schoolName} was rejected. Reason: ${reason}`);
+  alert("Decision saved. To send the email, your email app will open; press Send there. In-app notification is already saved.");
+  window.open(`mailto:${encodeURIComponent(x.email)}?subject=${subject}&body=${body}`,"_blank");
+  await loadSchoolNotifications();
+ }catch(e){alert("Could not save decision: "+e.message);}
+}
+async function loadSchoolChat(){
+ if(!activeUser)return;
+ const host=$("schoolChatMessages"),identity=$("schoolChatIdentity");
+ try{
+  activeSchool=await getMySchoolMembership();
+  if(!activeSchool){identity.textContent="Your account is not yet an approved member of a school. Wait for approval or ask your DOS / Headteacher.";host.innerHTML="";return;}
+  identity.textContent=`School: ${activeSchool.schoolName} · Signed in as ${activeSchool.fullname} (${activeSchool.role})`;
+  const q=query(collection(db,"schoolMessages"),where("schoolId","==",activeSchool.schoolId));
+  const snap=await getDocs(q);host.innerHTML="";
+  snap.docs.sort((a,b)=>(a.data().createdAt||0)-(b.data().createdAt||0)).forEach(d=>{
+   const x=d.data(),card=document.createElement("div");card.className="school-message"+(x.senderUid===activeUser.uid?" mine":"");
+   let attachment=x.fileUrl?`<p><a href="${safe(x.fileUrl)}" target="_blank" rel="noopener">📎 ${safe(x.fileName||"Open attachment")}</a></p>`:"";
+   card.innerHTML=`<b>${safe(x.senderName||x.senderEmail)}</b><small> · ${new Date(x.createdAt||Date.now()).toLocaleString()}</small><p>${safe(x.text||"")}</p>${attachment}`;host.appendChild(card);
+  });
+  host.scrollTop=host.scrollHeight;
+ }catch(e){host.innerHTML=`<p>Unable to load school chat: ${safe(e.message)}</p>`;}
+}
+$("schoolChatForm")?.addEventListener("submit",async e=>{
+ e.preventDefault();if(!activeUser)return;
+ try{
+  const member=await getMySchoolMembership();if(!member)throw Error("Only approved school members can send messages.");
+  const textValue=$("schoolChatText").value.trim(),file=$("schoolChatFile").files[0];if(!textValue&&!file)throw Error("Write a message or attach a file.");
+  let fileUrl="",fileName="",filePath="";
+  if(file){if(file.size>50*1024*1024)throw Error("Maximum attachment size is 50 MB.");
+   const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");filePath=`schoolChat/${member.schoolId}/${crypto.randomUUID()}_${safeName}`;
+   const storageRef=ref(storage,filePath);await uploadBytes(storageRef,file,{contentType:file.type||"application/octet-stream"});fileUrl=await getDownloadURL(storageRef);fileName=file.name;
+  }
+  await addDoc(collection(db,"schoolMessages"),{schoolId:member.schoolId,senderUid:activeUser.uid,senderEmail:activeUser.email,senderName:member.fullname,text:textValue,fileUrl,fileName,filePath,mimeType:file?.type||"",createdAt:Date.now()});
+  $("schoolChatText").value="";$("schoolChatFile").value="";await loadSchoolChat();
+ }catch(err){alert("Message could not be sent: "+err.message);}
+});
+
+onAuthStateChanged(auth,async user=>{
+ const previousUid=activeUser?.uid||null;
+ const nextUid=user?.uid||null;
+ if(previousUid && previousUid!==nextUid) window.clearUserWorkspaceUI();
+ activeUser=user;
+ if(user){
+  try{
+   const profile=await getDoc(doc(db,"users",user.uid));
+   if(profile.exists() && profile.data().memberStatus==="pending"){
+    await signOut(auth);alert("Your school membership request is still pending approval. You will be notified when a decision is made.");return;
+   }
+   const membership=await getDoc(doc(db,"schoolMembers",user.uid));
+   if(profile.exists() && profile.data().schoolId && (!membership.exists() || membership.data().status!=="approved")){
+    await signOut(auth);alert("Your account is not an approved member of this school.");return;
+   }
+   const savedSector=profile.exists()?profile.data().educationSector:null;
+   if(savedSector==="REB"||savedSector==="TVET"){
+    sessionStorage.setItem("novamindEducationSector",savedSector);
+    if(window.selectEducationSector) window.selectEducationSector(savedSector);
+   }
+  }catch(error){console.warn("Could not load school profile:",error);}
+  updateGreetings();refreshDashboard();loadSchoolNotifications();window.showModule("dashboard");
+ }else{window.clearUserWorkspaceUI();updateGreetings();}
+});
+</script>
+
+</body>
+</html>
